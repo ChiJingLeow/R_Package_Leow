@@ -1,11 +1,11 @@
 #'remove potential NA values in rdata
 #'
 #'@params data - your working rdata
-#'@params product - the data without NA values 
+#'@params product - the counts without NA values from all samples
 #
 
-clean_up <- function(data) {
+countdata_no_NA <- function(data) {
   product <- na.omit(data)
-  NA_omit_rdata <- data
-  return(NA_omit_rdata)
+  product <- data[,-(1:2)]
+  return(product)
 }
