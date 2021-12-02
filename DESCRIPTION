@@ -1,9 +1,9 @@
-Package: LeowRPackage
-Title: An R package for filtering data
+Package: R_Package_Leow
+Title: An R package for gene expression analyses
 Version: 0.0.0.9000
 Authors@R: 
     person("ChiJing", "Leow", , "chijing.leow@selu.edu", role = c("aut", "cre"))
-Description: Filters out low reads in gene expression counts
+Description: functions for gene expression analyses
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
