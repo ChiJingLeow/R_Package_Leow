@@ -28,7 +28,7 @@ library("limma")
 Now you can install my R package!
 and load it...
 ```{r}
-devtools::install_github("Chijingleow/R_Package_Leow")
+devtools::install_github("ChiJingLeow/R_Package_Leow")
 library("R_Package_Leow")
 ```
 
