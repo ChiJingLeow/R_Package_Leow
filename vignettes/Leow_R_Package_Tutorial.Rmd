@@ -1,6 +1,6 @@
 ---
 title: "R Package Leow"
-author: "ChiJing Leow"
+author: "ChiJingLeow"
 date: "12/2/2021"
 output: html_document
 ---
