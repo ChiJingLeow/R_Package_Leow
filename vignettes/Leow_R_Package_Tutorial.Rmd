@@ -1,0 +1,48 @@
+---
+title: "R Package Leow"
+author: "ChiJing Leow"
+date: "12/2/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Installation
+
+Load in these libraries.
+```{r}
+library(ggplot2)
+library(tidyverse)
+```
+
+You might need to install these R packages for this package to run.
+```{r eval=FALSE}
+install.packages("edgeR")
+install.packages("limma")
+library("edgeR")
+library("limma")
+```
+
+Now you can install my R package!
+and load it...
+```{r}
+devtools::install_github("Chijingleow/R_Package_Leow")
+library("R_Package_Leow")
+```
+
+Download the data for this package. 
+The first file is the gene counts data.
+The second file is the sample information.
+```{r}
+download.file("https://raw.githubusercontent.com/ChiJingLeow/R_Package_Leow/master/Data/GSE60450_LactationGenewiseCounts.txt", destfile = "cloud/project/Data/Genedata.txt")
+
+download.file("https://github.com/ChiJingLeow/R_Package_Leow/blob/master/Data/SampleInfo_Corrected.txt", destfile = "cloud/project/Data/Sampleinfo.txt")
+```
+
+
+
+an example of each function and how it works.
+description about why this is a good function. 
+expected output.
