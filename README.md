@@ -1,4 +1,4 @@
 # R_Package_Leow
-project for BDA 
+project 3 for BDA 
 
-Working with me, myself, and I. Just kidding I would probably work with friends. 
+I created a package for gene expression data. Hope it works.
