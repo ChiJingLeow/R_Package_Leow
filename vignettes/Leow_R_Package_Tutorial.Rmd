@@ -1,5 +1,5 @@
 ---
-title: "R Package Leow"
+title: "R_Package_Leow"
 author: "ChiJingLeow"
 date: "12/2/2021"
 output: html_document
