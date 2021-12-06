@@ -1,0 +1,9 @@
+^LICENSE\.md$
+^.*\.Rproj$
+^\.Rproj\.user$
+^LeowRPackage\.Rcheck$
+^LeowRPackage.*\.tar\.gz$
+^LeowRPackage.*\.tgz$
+^RPackageLeow\.Rcheck$
+^RPackageLeow.*\.tar\.gz$
+^RPackageLeow.*\.tgz$

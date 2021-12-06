@@ -2,7 +2,7 @@
 #'
 #'@params countdata - counts only
 #'@params sampleinfo - the samples information
-#'@product a DGElist storing count and sample info
+#'@params a DGElist storing count and sample info
 
 DGEobject <- function(countdata, sampleinfo) {
   if(is.data.frame(countdata) == FALSE) {
