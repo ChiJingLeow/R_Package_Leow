@@ -17,10 +17,21 @@ library(ggplot2)
 library(tidyverse)
 ```
 
-You might need to install these R packages for this package to run.
+You might need to install these R packages for this package to run. 
 ```{r eval=FALSE}
-install.packages("edgeR")
-install.packages("limma")
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("edgeR")
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("limma")
+```
+
+Load the packages.
+```{r}
 library("edgeR")
 library("limma")
 ```
@@ -36,13 +47,51 @@ Download the data for this package.
 The first file is the gene counts data.
 The second file is the sample information.
 ```{r}
-download.file("https://raw.githubusercontent.com/ChiJingLeow/R_Package_Leow/master/Data/GSE60450_LactationGenewiseCounts.txt", destfile = "cloud/project/Data/Genedata.txt")
+download.file("https://raw.githubusercontent.com/ChiJingLeow/R_Package_Leow/master/Data/GSE60450_LactationGenewiseCounts.txt", destfile = "/cloud/project/Data/Genedata.txt")
 
-download.file("https://github.com/ChiJingLeow/R_Package_Leow/blob/master/Data/SampleInfo_Corrected.txt", destfile = "cloud/project/Data/Sampleinfo.txt")
+download.file("https://raw.githubusercontent.com/ChiJingLeow/R_Package_Leow/master/Data/SampleInfo_Corrected.txt", destfile = "/cloud/project/Data/Sampleinfo.txt")
 ```
 
+Read the gene counts and sample info files using read.delim
+```{r}
+data <- read.delim("/cloud/project/Data/Genedata.txt")
+sampleinfo <- read.delim("/cloud/project/Data/Sampleinfo.txt")
+```
 
+Take a look at the gene counts data. It is a table. 
+Function 1: removes potential NA values. It also removes the geneID and length, we just want the counts for now.
+```{r}
+countdata <- countdata_no_NA(data)
+countdata
+```
 
-an example of each function and how it works.
-description about why this is a good function. 
-expected output.
+The sample names are way too long,
+Function 2: shortens the names so it's easy to look at and manage. 
+You should see the sample names like MCL1.DG rather than 30 characters in length.
+```{r}
+countdata <- short_name(countdata)
+countdata
+```
+
+We can make a DGElist object from the package edgeR, it stores counts, library sieze, norm.factors, group and etc. 
+Function 3 does this for you! you just need to put in the count data and sample information.
+You should see the group and library size are not stored in the DGElist.
+```{r}
+object1 <- DGEobject(countdata,sampleinfo)
+object1
+```
+
+Filtering out low counts (lowly expressed genes) is one of the first steps in analyzing gene expressions. 
+Function 4 will filter out cpm that's lower than 0.5 and gives you a summary of the counts above the threshold.
+```{r}
+filtered <- Filter_low_counts(countdata)
+filtered
+```
+
+To see compare the library sizes from each group, we can use 
+Function 5 which plots it out and gives the mean of all libraries too. 
+Just put in the group and library.
+```{r}
+plot1 <- plot_library_reads(group,lib_size)
+plot1
+```
