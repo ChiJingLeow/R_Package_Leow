@@ -45,8 +45,8 @@ library("RPackageLeow")
 ```
 
 Download the data for this package. 
-The first file is the gene counts data.
-The second file is the sample information.
+These data come from a Nature Cell Biology paper, EGF-mediated induction of Mcl-1 at the switch to lactation is essential for alvaelor cell survival (Fu et al., 2015).
+The first file is the gene counts and the second file is the sample information.
 ```{r}
 download.file("https://raw.githubusercontent.com/ChiJingLeow/R_Package_Leow/master/Data/GSE60450_LactationGenewiseCounts.txt", destfile = "/cloud/project/Data/Genedata.txt")
 
@@ -59,7 +59,7 @@ data <- read.delim("/cloud/project/Data/Genedata.txt")
 sampleinfo <- read.delim("/cloud/project/Data/Sampleinfo.txt")
 ```
 
-Take a look at the gene counts data. It is a table. 
+The gene counts data is in a table which includes GeneID, length, 12 samples, and the reads. 
 Function 1: countdata_no_NA
 It removes potential NA values. It also removes the geneID and length, we just want the counts for now.
 ```{r include=FALSE}
@@ -79,7 +79,7 @@ countdata <- countdata_no_NA(data)
 countdata
 ```
 
-The sample names are way too long,
+The sample names are way too long...
 Function 2: Short_name
 It shortens the names so it's easy to look at and manage. 
 You should see the sample names like MCL1.DG rather than 30 characters in length.
