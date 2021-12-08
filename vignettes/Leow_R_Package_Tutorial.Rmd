@@ -134,8 +134,9 @@ filtered <- Filter_low_counts(countdata)
 filtered
 ```
 
-To see compare the library sizes from each group, we can use 
-Function 5 which plots it out and gives the mean of all libraries too. 
+To compare the library sizes from each group, we can use 
+Function 5: plot_library_reads
+Which plots it out and gives the mean of all libraries too. 
 Just put in the group and library.
 ```{r}
 plot_library_reads <- function(group, lib_size) {
