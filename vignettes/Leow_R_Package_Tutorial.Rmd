@@ -61,7 +61,7 @@ sampleinfo <- read.delim("/cloud/project/Data/Sampleinfo.txt")
 Take a look at the gene counts data. It is a table. 
 Function 1: countdata_no_NA
 It removes potential NA values. It also removes the geneID and length, we just want the counts for now.
-```{r}
+```{r include=FALSE}
 countdata_no_NA <- function(data) {
   if(is.data.frame(data) == FALSE) {
     return("not a dataframe")
@@ -82,7 +82,7 @@ The sample names are way too long,
 Function 2: Short_name
 It shortens the names so it's easy to look at and manage. 
 You should see the sample names like MCL1.DG rather than 30 characters in length.
-```{r}
+```{r include=FALSE}
 short_name <- function(data) {
   if(is.data.frame(data) == FALSE) {
     return("not a dataframe")
