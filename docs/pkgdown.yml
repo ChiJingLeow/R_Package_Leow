@@ -1,6 +1,7 @@
 pandoc: 2.14.0.3
-pkgdown: 2.0.0
+pkgdown: 2.0.1
 pkgdown_sha: ~
-articles: {}
-last_built: 2021-12-02T20:57Z
+articles:
+  Leow_R_Package_Tutorial: Leow_R_Package_Tutorial.html
+last_built: 2021-12-08T17:43Z
 
