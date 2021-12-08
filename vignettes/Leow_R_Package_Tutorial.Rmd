@@ -32,15 +32,15 @@ BiocManager::install("limma")
 
 Load the packages.
 ```{r}
-library("edgeR")
 library("limma")
+library("edgeR")
 ```
 
 Now you can install my R package!
 and load it...
 ```{r}
 devtools::install_github("ChiJingLeow/R_Package_Leow")
-library("R_Package_Leow")
+library("RPackageLeow")
 ```
 
 Download the data for this package. 
@@ -59,31 +59,77 @@ sampleinfo <- read.delim("/cloud/project/Data/Sampleinfo.txt")
 ```
 
 Take a look at the gene counts data. It is a table. 
-Function 1: removes potential NA values. It also removes the geneID and length, we just want the counts for now.
+Function 1: countdata_no_NA
+It removes potential NA values. It also removes the geneID and length, we just want the counts for now.
 ```{r}
+countdata_no_NA <- function(data) {
+  if(is.data.frame(data) == FALSE) {
+    return("not a dataframe")
+  }
+  product <- na.omit(data)
+  if(product == data){
+    print("no NA values found")
+  }
+  product <- data[,-(1:2)]
+  return(product)
+}
+
 countdata <- countdata_no_NA(data)
 countdata
 ```
 
 The sample names are way too long,
-Function 2: shortens the names so it's easy to look at and manage. 
+Function 2: Short_name
+It shortens the names so it's easy to look at and manage. 
 You should see the sample names like MCL1.DG rather than 30 characters in length.
 ```{r}
+short_name <- function(data) {
+  if(is.data.frame(data) == FALSE) {
+    return("not a dataframe")
+  }
+  colnames(data) <- substr(colnames(data),start=1,stop=7)
+  return(data)
+  
+}
 countdata <- short_name(countdata)
 countdata
 ```
 
 We can make a DGElist object from the package edgeR, it stores counts, library sieze, norm.factors, group and etc. 
-Function 3 does this for you! you just need to put in the count data and sample information.
+Function 3: DGEobject
+This function creates the object for you! you just need to put in the count data and sample information.
 You should see the group and library size are not stored in the DGElist.
 ```{r}
+DGEobject <- function(countdata, sampleinfo) {
+  if(is.data.frame(countdata) == FALSE) {
+    return("not a dataframe")
+  }
+  if(is.data.frame(sampleinfo) == FALSE) {
+    return("not a dataframe")
+  }
+  product <- DGEList(countdata)
+  combined <- paste(sampleinfo$CellType, sampleinfo$Status, sep = "_")
+  combined <- factor(combined) 
+  product$samples$group <- combined
+  return(product)
+}
 object1 <- DGEobject(countdata,sampleinfo)
 object1
 ```
 
 Filtering out low counts (lowly expressed genes) is one of the first steps in analyzing gene expressions. 
-Function 4 will filter out cpm that's lower than 0.5 and gives you a summary of the counts above the threshold.
+Function 4 :Filter_low_counts
+It will filter out cpm that's lower than 0.5 and gives you a summary of the counts above the threshold.
 ```{r}
+Filter_low_counts <- function(data) {
+  if(is.data.frame(data) == FALSE) {
+    return("not a dataframe")
+  }
+  data_cpm <- cpm(data)
+  threshold <- data_cpm > 0.5
+  threshold <- summary(threshold)
+  return(threshold)
+}
 filtered <- Filter_low_counts(countdata)
 filtered
 ```
@@ -92,6 +138,13 @@ To see compare the library sizes from each group, we can use
 Function 5 which plots it out and gives the mean of all libraries too. 
 Just put in the group and library.
 ```{r}
-plot1 <- plot_library_reads(group,lib_size)
-plot1
+plot_library_reads <- function(group, lib_size) {
+  if(is.numeric(lib_size) == FALSE) {
+    return("not a numeric data")
+  }
+  print("library average reads")
+  mean(lib_size)
+  ggplot(mapping = aes(x = group, y = lib_size)) +geom_point()
+}
+plot_library_reads(object1$samples$group , object1$samples$lib.size)
 ```
