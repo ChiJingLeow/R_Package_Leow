@@ -15,6 +15,7 @@ Load in these libraries.
 ```{r}
 library(ggplot2)
 library(tidyverse)
+library(devtools)
 ```
 
 You might need to install these R packages for this package to run. 
