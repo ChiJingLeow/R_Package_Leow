@@ -152,7 +152,7 @@ To compare the library sizes from each group, we can use
 
 Function 5: plot_library_reads
 
-The functions takes in the group and the library sieze. It uses geom_point and gives a mean from each group.
+The functions takes in the group and the library sieze. Red dots are the mean from each group.
 ```{r}
 plot_library_reads <- function(group, lib_size) {
   if(is.numeric(lib_size) == FALSE) {
