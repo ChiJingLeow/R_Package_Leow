@@ -45,7 +45,9 @@ library("RPackageLeow")
 ```
 
 Download the data for this package. 
+
 These data come from a Nature Cell Biology paper, EGF-mediated induction of Mcl-1 at the switch to lactation is essential for alvaelor cell survival (Fu et al., 2015).
+
 The first file is the gene counts and the second file is the sample information.
 ```{r}
 download.file("https://raw.githubusercontent.com/ChiJingLeow/R_Package_Leow/master/Data/GSE60450_LactationGenewiseCounts.txt", destfile = "/cloud/project/Data/Genedata.txt")
@@ -60,8 +62,12 @@ sampleinfo <- read.delim("/cloud/project/Data/Sampleinfo.txt")
 ```
 
 The gene counts data is in a table which includes GeneID, length, 12 samples, and the reads. 
+
 Function 1: countdata_no_NA
-It removes potential NA values. It also removes the geneID and length, we just want the counts for now.
+
+The function takes in a dataset and removes potential NA values, geneID and length. 
+
+It returns dataset with only counts.
 ```{r include=FALSE}
 countdata_no_NA <- function(data) {
   if(is.data.frame(data) == FALSE) {
@@ -80,8 +86,10 @@ countdata
 ```
 
 The sample names are way too long...
+
 Function 2: Short_name
-It shortens the names so it's easy to look at and manage. 
+
+The function takes in the dataset and returns with shortened sample names.
 You should see the sample names like MCL1.DG rather than 30 characters in length.
 ```{r include=FALSE}
 short_name <- function(data) {
@@ -96,9 +104,12 @@ countdata <- short_name(countdata)
 countdata
 ```
 
-We can make a DGElist object from the package edgeR, it stores counts, library sieze, norm.factors, group and etc. 
 Function 3: DGEobject
-This function creates the object for you! you just need to put in the count data and sample information.
+
+We can make a DGElist object from the package edgeR, "counts" and "samples" are stored in it.
+
+This function takes in the dataset, creates a DGElist and adds the group category from sampleinfo to it.
+
 You should see the group and library size are not stored in the DGElist.
 ```{r}
 DGEobject <- function(countdata, sampleinfo) {
@@ -118,9 +129,11 @@ object1 <- DGEobject(countdata,sampleinfo)
 object1
 ```
 
-Filtering out low counts (lowly expressed genes) is one of the first steps in analyzing gene expressions. 
 Function 4 :Filter_low_counts
-It will filter out cpm that's lower than 0.5 and gives you a summary of the counts above the threshold.
+
+Filtering out low counts (lowly expressed genes) is one of the first steps in analyzing gene expressions. 
+
+The function filters out counts per million (cpm) that's lower than 0.5 and gives you a summary of the counts above the threshold.
 ```{r}
 Filter_low_counts <- function(data) {
   if(is.data.frame(data) == FALSE) {
@@ -136,17 +149,17 @@ filtered
 ```
 
 To compare the library sizes from each group, we can use 
+
 Function 5: plot_library_reads
-Which plots it out and gives the mean of all libraries too. 
-Just put in the group and library.
+
+The functions takes in the group and the library sieze. It uses geom_point and gives a mean from each group.
 ```{r}
 plot_library_reads <- function(group, lib_size) {
   if(is.numeric(lib_size) == FALSE) {
     return("not a numeric data")
   }
-  print("library average reads")
-  mean(lib_size)
-  ggplot(mapping = aes(x = group, y = lib_size)) +geom_point()
+  ggplot(mapping = aes(x = group, y = lib_size)) +geom_point() +ggtitle("lib size from each group") +stat_summary(fun.y = mean, col ="red", fill = "red")
 }
+
 plot_library_reads(object1$samples$group , object1$samples$lib.size)
 ```
